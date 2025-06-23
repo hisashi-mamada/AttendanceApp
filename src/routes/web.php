@@ -6,7 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\UserRequestController;
-
+use App\Http\Controllers\AdminAttendanceController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminRequestController;
 
 
 
@@ -27,6 +29,23 @@ Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->na
 
 Route::get('/stamp_correction_request/list', [UserRequestController::class, 'index'])->name('request.list');
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/attendances/{id}', [AdminAttendanceController::class, 'show'])->name('attendances.show');
+    Route::get('/attendances', [AdminAttendanceController::class, 'index'])->name('attendances.index');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/requests', [AdminRequestController::class, 'index'])->name('requests.index');
+});
+
+Route::get('/admin/users/{user}/attendances', [AdminAttendanceController::class, 'userIndex'])->name('admin.attendances.user_index');
+
+Route::get('/admin/requests', [AdminRequestController::class, 'index'])
+    ->name('admin.requests.index');
+
+Route::get('/admin/requests/{id}', [AdminRequestController::class, 'show'])
+    ->name('admin.requests.show');
+
+Route::patch('/admin/requests/{id}/approve', [AdminRequestController::class, 'approve'])
+    ->name('admin.requests.approve');
 
 Route::get('/', function () {
     return view('welcome');

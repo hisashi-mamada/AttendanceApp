@@ -56,7 +56,7 @@ body {
 }
 
 .toppage-nav-link {
-    width: 135px;
+    width: 150px;
     height: 47px;
     line-height: 47px;
     margin-right: 10px;
@@ -336,7 +336,7 @@ body {
 
 .attendance-table th {
     background-color: #fff;
-    color: #000;
+    color: #737373;
     font-weight: 700;
     font-size: 16px;
     padding: 12px;
@@ -544,4 +544,81 @@ body {
 
 .hidden {
     display: none;
+}
+
+-------------------------/*admin-users*/-------------------
+
+.staff-list-wrapper {
+    padding: 40px 20px ;
+    width: 100% ;
+    max-width: 800px ;
+    margin: 0 auto ;
+    display: flex ;
+    justify-content: center;
+}
+
+.user-list-table {
+    width: 900px;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+.user-list-table th,
+.user-list-table td {
+    padding: 16px 20px;
+    text-align: center;
+    vertical-align: middle;
+    letter-spacing: 0.15em;
+    border-bottom: 3px solid #E1E1E1;
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+.left{
+    position: relative;
+    left: 70px;
+}
+
+.right{
+    position: relative;
+    right: 70px;
+}
+
+.user-list-table thead {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #737373;
+}
+
+.user-list-table tr:last-child td {
+    border-bottom: none;
+}
+
+.user-list-table a {
+    color: #000;
+    text-decoration: underline;
+}
+
+------------------/*admin_user_attendance*/-----------------
+
+.button-area {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.csv-button {
+    width: 184px ;
+    height: 50px ;
+    background-color: black;
+    color: white ;
+    padding: 10px 30px ;
+    border-radius: 5px ;
+    font-weight: bold ;
+    font-size: 22px ;
+    border: none ;
+    letter-spacing: 0.15em ;
 }

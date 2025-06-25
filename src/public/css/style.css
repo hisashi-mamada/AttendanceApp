@@ -166,6 +166,14 @@ body {
     text-decoration: none;
 }
 
+.error-message {
+    color: red;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
 --------------------------/*attendance専用*/---------------------------
 
 .attendance-wrapper {

@@ -23,6 +23,6 @@
         <button type="submit" class="register-btn">ログインする</button>
     </form>
 
-    <p><a href="{{ route('register.create') }}" class="login-link">会員登録はこちら</a></p>
+    <p><a href="{{ route('register') }}" class="login-link">会員登録はこちら</a></p>
 </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'ログイン')
+@section('title', '管理者ログイン')
 
 @section('content')
 <div class="auth-content">

@@ -14,7 +14,7 @@ class AttendanceController extends Controller
 
     public function create()
     {
-        $user = User::find(1);
+        $user = Auth::user();
         $today = Carbon::today();
         $now = Carbon::now();
 
@@ -52,7 +52,7 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::find(1);
+        $user = Auth::user();
         $today = Carbon::today();
         $now = Carbon::now();
 
@@ -105,7 +105,7 @@ class AttendanceController extends Controller
 
     public function list()
     {
-        $user = User::find(1); // 仮ユーザー（認証後はAuth::user()へ）
+        $user = Auth::user();
         $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
         $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
 

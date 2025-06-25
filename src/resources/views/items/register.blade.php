@@ -7,7 +7,7 @@
     <h1>会員登録</h1>
 
 
-    <form method="POST" action="{{ route('register.post') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <label for="name">ユーザー名</label>

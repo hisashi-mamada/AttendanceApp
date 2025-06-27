@@ -18,6 +18,8 @@
         </div>
 
         <nav class="toppage-header-nav">
+
+            @auth
             @if (Route::has('admin.attendances.index'))
             <a href="{{ route('admin.attendances.index') }}" class="toppage-nav-link">勤怠一覧</a>
             @endif
@@ -27,9 +29,15 @@
             @if (Route::has('admin.requests.index'))
             <a href="{{ route('admin.requests.index') }}" class="toppage-nav-link">申請一覧</a>
             @endif
-            @if (Route::has('admin.login'))
-            <a href="{{ route('admin.login') }}" class="toppage-nav-link">ログイン</a>
-            @endif
+            <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                @csrf
+                <button type="submit" class="toppage-nav-link" style="background:none; border:none; padding:0; cursor:pointer;">
+                    ログアウト
+                </button>
+            </form>
+            @else
+            <a href="{{ route('login') }}" class="toppage-nav-link">ログイン</a>
+            @endauth
         </nav>
 
     </header>

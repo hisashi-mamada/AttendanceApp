@@ -10,12 +10,26 @@ use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRequestController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->middleware(['web'])
+    ->name('register');
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->middleware(['web'])
+    ->name('login');
+
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(['web'])
+    ->name('login.store');
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('logout');
 
 Route::get('/attendance', [AttendanceController::class, 'create'])->name('attendances.index');
 Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendances.store');

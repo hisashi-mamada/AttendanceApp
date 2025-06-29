@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AdminLoginRequest;
 
 class AdminLoginController extends Controller
 {
@@ -13,17 +14,17 @@ class AdminLoginController extends Controller
         return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function login(AdminLoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
-        // guardの指定が必要であれば 'admin' に変更
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('/admin/dashboard'); // 成功時の遷移先
+        if (Auth::attempt(array_merge($credentials, ['role' => 'admin']))) {
+            return redirect()->intended('/admin/dashboard');
         }
 
+
         return back()->withErrors([
-            'email' => 'ログイン情報が正しくありません。',
+            'email' => 'ログイン情報が登録されていません',
         ])->withInput();
     }
 }

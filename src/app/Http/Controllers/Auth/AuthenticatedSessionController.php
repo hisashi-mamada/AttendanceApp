@@ -10,13 +10,27 @@ use Laravel\Fortify\Contracts\LoginResponse;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function store(LoginRequest $request): LoginResponse
+    public function store(Request $request)
     {
-        $request->authenticate();
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        $request->session()->regenerate();
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
 
-        return app(LoginResponse::class);
+            // ロールで遷移先を分岐
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.attendances.index');
+            } else {
+                return redirect()->route('attendances.index');
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'ログイン情報が正しくありません。',
+        ]);
     }
 
     public function destroy(Request $request)

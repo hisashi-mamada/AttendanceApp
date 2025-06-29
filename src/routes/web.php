@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -9,8 +10,10 @@ use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRequestController;
+use App\Models\Attendance;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use Carbon\Carbon;
 
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -24,8 +27,25 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware(['web'])
     ->name('login.store');
+
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        $date = now()->toDateString();
+        $previousDate = now()->subDay()->toDateString();
+        $nextDate = now()->addDay()->toDateString();
+        $attendances = [];
+
+        return view('admin.admin-attendance-list', [
+            'date' => $date,
+            'previousDate' => $previousDate,
+            'nextDate' => $nextDate,
+            'attendances' => $attendances,
+        ]);
+    })->name('admin.attendances.index');
+});
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware(['auth'])

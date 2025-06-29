@@ -18,6 +18,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Contracts\LoginResponse;
+use App\Http\Responses\FortifyLoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,11 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(
             \Laravel\Fortify\Contracts\RegisterViewResponse::class,
             \App\Http\Responses\FortifyRegisterViewResponse::class
+        );
+
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\FortifyLoginResponse::class
         );
     }
 
@@ -56,8 +63,11 @@ class FortifyServiceProvider extends ServiceProvider
             session(['url.intended' => '/attendance']);
         });
 
-        Fortify::loginView(function () {
-            return view('items.login');
+        Fortify::loginView(function (Request $request) {
+            if ($request->is('admin/login')) {
+                return view('admin.login'); // 管理者用ログイン画面
+            }
+            return view('items.login'); // 一般ユーザー用ログイン画面
         });
 
         Fortify::registerView(function () {

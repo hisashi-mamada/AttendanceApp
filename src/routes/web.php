@@ -15,6 +15,10 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Carbon\Carbon;
 
+Route::get('/', function () {
+    return view('top.index');
+})->name('top');
+
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
     ->middleware(['web'])
@@ -77,7 +81,3 @@ Route::get('/admin/requests/{id}', [AdminRequestController::class, 'show'])
 
 Route::patch('/admin/requests/{id}/approve', [AdminRequestController::class, 'approve'])
     ->name('admin.requests.approve');
-
-Route::get('/', function () {
-    return view('welcome');
-});

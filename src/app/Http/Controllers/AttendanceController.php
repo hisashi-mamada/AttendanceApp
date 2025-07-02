@@ -106,8 +106,11 @@ class AttendanceController extends Controller
     public function list()
     {
         $user = Auth::user();
-        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
-        $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
+        $month = request('month');
+        $targetMonth = $month ? Carbon::parse($month . '-01') : Carbon::now();
+
+        $startOfMonth = $targetMonth->copy()->startOfMonth();
+        $endOfMonth = $targetMonth->copy()->endOfMonth();
 
         $attendances = Attendance::with('breakTimes')
             ->where('user_id', $user->id)
@@ -117,6 +120,7 @@ class AttendanceController extends Controller
 
         return view('items.attendance-list', [
             'attendances' => $attendances,
+            'month' => $targetMonth->format('Y-m'),
         ]);
     }
 

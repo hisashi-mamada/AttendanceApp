@@ -3,26 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AttendanceCorrectionRequest;
 
 class UserRequestController extends Controller
 {
     public function index(Request $request)
     {
-        $tab = $request->query('tab', 'pending'); // デフォルトは「承認待ち」
+        $tab = $request->query('tab', 'pending');
+        $user = Auth::user();
 
-        $pendingRequests = []; // DBから取得に置き換えOK
-        $approvedRequests = [];
+        if (!$user) {
+            return redirect()->route('login')->withErrors(['login' => 'ログインしてください']);
+        }
 
-        // 例）本来はEloquentで取得
         if ($tab === 'pending') {
-            $data = $pendingRequests;
+            $requests = AttendanceCorrectionRequest::with('attendance')
+                ->where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->orderByDesc('created_at')
+                ->get();
         } else {
-            $data = $approvedRequests;
+            $requests = AttendanceCorrectionRequest::with('attendance')
+                ->where('user_id', $user->id)
+                ->where('status', 'approved')
+                ->orderByDesc('created_at')
+                ->get();
         }
 
         return view('items.request-list', [
             'tab' => $tab,
-            'requests' => $data,
+            'requests' => $requests,
         ]);
     }
 }

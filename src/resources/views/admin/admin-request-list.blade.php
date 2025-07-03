@@ -35,7 +35,8 @@
                     <td>{{ $request['target_date'] }}</td>
                     <td>{{ $request['reason'] }}</td>
                     <td>{{ $request['request_date'] }}</td>
-                    <td><a href="#" class="detail-link">詳細</a></td>
+                    <td><a href="{{ route('admin.requests.show', $request['id']) }}" class="detail-link">詳細</a></td>
+
                 </tr>
                 @empty
                 <tr>

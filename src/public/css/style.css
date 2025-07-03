@@ -433,7 +433,7 @@ body {
     border-radius: 12px;
     border-bottom: 2px solid #E1E1E1;
     width: 800px;
-    height: 460px;
+    height: 560px;
     margin: 0 auto;
 }
 
@@ -504,6 +504,14 @@ body {
     height: 80px;
     font-size: 16px;
     border: 1px solid #ccc;
+}
+
+.attendance-detail-wrapper .error-message {
+    display: block;
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    clear: both;
 }
 
 .button-area {

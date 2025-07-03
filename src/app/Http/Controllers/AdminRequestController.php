@@ -21,6 +21,7 @@ class AdminRequestController extends Controller
             ->get()
             ->map(function ($request) {
                 return [
+                    'id' => $request->id,
                     'name' => $request->user->name ?? '',
                     'target_date' => optional($request->attendance)->date ?? '',
                     'reason' => $request->reason,

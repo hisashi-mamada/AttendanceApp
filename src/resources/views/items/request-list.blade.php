@@ -30,11 +30,11 @@
             <tbody>
                 @forelse ($requests as $request)
                 <tr>
-                    <td>{{ $tab === 'pending' ? '承認待ち' : '承認済み' }}</td>
-                    <td>{{ $request['name'] }}</td>
-                    <td>{{ $request['target_date'] }}</td>
-                    <td>{{ $request['reason'] }}</td>
-                    <td>{{ $request['request_date'] }}</td>
+                    <td>{{ $request->status === 'pending' ? '承認待ち' : '承認済み' }}</td>
+                    <td>{{ $request->user->name ?? '不明' }}</td>
+                    <td>{{ optional($request->attendance)->date ?? '---' }}</td>
+                    <td>{{ $request->reason }}</td>
+                    <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td><a href="#" class="detail-link">詳細</a></td>
                 </tr>
                 @empty
@@ -43,6 +43,7 @@
                 </tr>
                 @endforelse
             </tbody>
+
         </table>
 
         <table class="request-table hidden" id="table-approved">

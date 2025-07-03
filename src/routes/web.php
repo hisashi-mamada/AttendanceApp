@@ -62,6 +62,9 @@ Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('att
 
 Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->name('attendance.detail');
 
+Route::patch('/attendance/update/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+
 Route::get('/stamp_correction_request/list', [UserRequestController::class, 'index'])->name('request.list');
 
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
+use App\Http\Requests\AttendanceRequest;
+use App\Models\BreakTime;
+use Illuminate\Support\Facades\DB;
 
 class AdminAttendanceController extends Controller
 {
@@ -37,5 +40,34 @@ class AdminAttendanceController extends Controller
             ->get();
 
         return view('admin.admin_user_attendance', compact('user', 'attendances'));
+    }
+
+    public function update(AttendanceRequest $request, $id)
+    {
+        $attendance = Attendance::findOrFail($id);
+
+        $date = $attendance->date; // 2025-07-05 など
+
+        // 勤怠の更新
+        $attendance->clock_in_time = Carbon::parse($date . ' ' . $request->input('clock_in_time'));
+        $attendance->clock_out_time = Carbon::parse($date . ' ' . $request->input('clock_out_time'));
+        $attendance->remarks = $request->input('remarks');
+        $attendance->save();
+
+        // 既存の休憩時間を削除
+        $attendance->breakTimes()->delete();
+
+        // 新しい休憩時間を保存
+        foreach ($request->input('breaks', []) as $break) {
+            if (!empty($break['start']) && !empty($break['end'])) {
+                $attendance->breakTimes()->create([
+                    'break_start_time' => Carbon::parse($date . ' ' . $break['start']),
+                    'break_end_time'   => Carbon::parse($date . ' ' . $break['end']),
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.attendances.show', ['id' => $attendance->id])
+            ->with('message', '勤怠情報を更新しました。');
     }
 }

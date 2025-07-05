@@ -84,3 +84,6 @@ Route::get('/admin/requests/{id}', [AdminRequestController::class, 'show'])
 
 Route::patch('/admin/requests/{id}/approve', [AdminRequestController::class, 'approve'])
     ->name('admin.requests.approve');
+
+Route::patch('/admin/attendances/{id}', [AdminAttendanceController::class, 'update'])
+    ->name('admin.attendances.update');

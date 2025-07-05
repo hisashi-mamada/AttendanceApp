@@ -33,13 +33,23 @@ class AdminAttendanceController extends Controller
         return view('admin.admin-attendance-detail', compact('attendance'));
     }
 
-    public function userIndex(User $user)
+    public function userIndex(Request $request, User $user)
     {
-        $attendances = Attendance::where('user_id', $user->id)
-            ->orderBy('date', 'desc')
+        $targetMonth = $request->input('month', now()->format('Y-m'));
+        $startDate = Carbon::parse($targetMonth . '-01')->startOfMonth();
+        $endDate = Carbon::parse($targetMonth . '-01')->endOfMonth();
+
+        $attendances = Attendance::with('breakTimes')
+            ->where('user_id', $user->id)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->orderBy('date')
             ->get();
 
-        return view('admin.admin_user_attendance', compact('user', 'attendances'));
+        return view('admin.admin_user_attendance', [
+            'user' => $user,
+            'attendances' => $attendances,
+            'month' => $targetMonth,
+        ]);
     }
 
     public function update(AttendanceRequest $request, $id)

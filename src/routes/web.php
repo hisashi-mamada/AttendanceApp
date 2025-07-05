@@ -87,3 +87,5 @@ Route::patch('/admin/requests/{id}/approve', [AdminRequestController::class, 'ap
 
 Route::patch('/admin/attendances/{id}', [AdminAttendanceController::class, 'update'])
     ->name('admin.attendances.update');
+
+Route::get('/admin/attendances/user/{user}', [AdminAttendanceController::class, 'userIndex'])->name('admin.attendances.user_index');

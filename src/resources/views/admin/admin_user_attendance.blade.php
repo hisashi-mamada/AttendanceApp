@@ -8,17 +8,22 @@
 
 
     <div class="attendance-month-navigation">
-        <a href="#" class="month-nav">
+        @php
+        $prevMonth = \Carbon\Carbon::parse($month ?? now())->subMonth()->format('Y-m');
+        $nextMonth = \Carbon\Carbon::parse($month ?? now())->addMonth()->format('Y-m');
+        @endphp
+        <a href="{{ route('admin.attendances.user_index', ['user' => $user->id, 'month' => $prevMonth]) }}" class="month-nav">
             <img src="{{ asset('images/arrow.png') }}" alt="前月" class="arrow left-arrow"> 前月
         </a>
         <div class="month-center">
             <img src="{{ asset('images/calendar.png') }}" alt="カレンダー" class="calendar-icon">
-            <span class="month-current">{{ \Carbon\Carbon::now()->format('Y/m') }}</span>
+            <span class="month-current">{{ \Carbon\Carbon::parse($month ?? now())->format('Y/m') }}</span>
         </div>
-        <a href="#" class="month-nav">
+        <a href="{{ route('admin.attendances.user_index', ['user' => $user->id, 'month' => $nextMonth]) }}" class="month-nav">
             翌月 <img src="{{ asset('images/arrow.png') }}" alt="翌月" class="arrow right-arrow">
         </a>
     </div>
+
 
     <table class="attendance-table">
         <thead>

@@ -146,12 +146,13 @@ class AttendanceController extends Controller
         $clockInDateTime = \Carbon\Carbon::parse($date . ' ' . $request->input('clock_in_time'));
         $clockOutDateTime = \Carbon\Carbon::parse($date . ' ' . $request->input('clock_out_time'));
 
+
         AttendanceCorrectionRequest::create([
             'user_id' => auth()->id(),
             'attendance_id' => $attendance->id,
             'requested_clock_in_time' => $clockInDateTime,
             'requested_clock_out_time' => $clockOutDateTime,
-            'reason' => $request->input('remarks'),
+            'reason' => $request->input('reason'),
             'status' => 'pending',
             'approved_by' => null,
         ]);

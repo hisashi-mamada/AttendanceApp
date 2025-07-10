@@ -10,7 +10,7 @@
         <table class="attendance-detail-table">
             <tr>
                 <th>名前</th>
-                <td>{{ $attendance->user->name }}</td>
+                <td>{{ $request->user->name }}</td>
             </tr>
 
             <td colspan="2">
@@ -20,9 +20,8 @@
             <tr>
                 <th>日付</th>
                 <td class="time-cell">
-                    <span>{{ \Carbon\Carbon::parse($attendance->date)->format('Y年') }}</span>
-                    <span>{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}</span>
-
+                    <span>{{ $request->requested_clock_in_time->format('Y年') }}</span>
+                    <span>{{ $request->requested_clock_in_time->format('n月j日') }}</span>
                 </td>
             </tr>
 
@@ -33,8 +32,8 @@
             <tr>
                 <th>出勤・退勤</th>
                 <td class="time-cell">
-                    <input type="text" value="{{ $attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '' }}" readonly> 〜
-                    <input type="text" value="{{ $attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '' }}" readonly>
+                    <input type="text" value="{{ \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') }}" readonly> 〜
+                    <input type="text" value="{{ \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') }}" readonly>
                 </td>
             </tr>
 
@@ -42,16 +41,19 @@
                 <div class="custom-border-line"></div>
             </td>
 
-            {{-- 休憩（可変対応） --}}
+            {{-- 休憩時間表示（DBから取得した値） --}}
+            @if ($attendance->breakTimes->isNotEmpty())
             @foreach ($attendance->breakTimes as $index => $break)
             <tr>
                 <th>{{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}</th>
                 <td class="time-cell">
-                    <input type="text" value="{{ $break->break_start_time ? \Carbon\Carbon::parse($break->break_start_time)->format('H:i') : '' }}" readonly> 〜
-                    <input type="text" value="{{ $break->break_end_time ? \Carbon\Carbon::parse($break->break_end_time)->format('H:i') : '' }}" readonly>
+                    <input type="text" value="{{ \Carbon\Carbon::parse($break->break_start_time)->format('H:i') }}" readonly> 〜
+                    <input type="text" value="{{ \Carbon\Carbon::parse($break->break_end_time)->format('H:i') }}" readonly>
                 </td>
             </tr>
             @endforeach
+            @endif
+
 
             <td colspan="2">
                 <div class="custom-border-line"></div>
@@ -60,7 +62,7 @@
             <tr>
                 <th>備考</th>
                 <td>
-                    <textarea readonly>{{ $attendance->remarks }}</textarea>
+                    <textarea readonly>{{ $request->reason }}</textarea>
                 </td>
             </tr>
         </table>
@@ -77,6 +79,5 @@
         <button class="edit-button" disabled>承認済み</button>
         @endif
     </div>
-
 </div>
 @endsection

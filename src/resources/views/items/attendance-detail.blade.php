@@ -10,6 +10,8 @@
         @csrf
         @method('PATCH')
 
+        <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
+
         <div class="attendance-detail-box">
             <table class="attendance-detail-table">
                 <tr>
@@ -35,17 +37,16 @@
                 <tr>
                     <th>出勤・退勤</th>
                     <td class="time-cell">
-                        <input type="text" name="clock_in_time"
-                            value="{{ old('clock_in_time', $attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '') }}">
-
+                        <input type="text" name="requested_clock_in_time"
+                            value="{{ old('requested_clock_in_time', $attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '') }}">
                         〜
-                        <input type="text" name="clock_out_time"
-                            value="{{ old('clock_out_time', $attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '') }}">
+                        <input type="text" name="requested_clock_out_time"
+                            value="{{ old('requested_clock_out_time', $attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '') }}">
 
-                        @error('clock_in_time')
+                        @error('requested_clock_in_time')
                         <div class="error-message">{{ $message }}</div>
                         @enderror
-                        @error('clock_out_time')
+                        @error('requested_clock_out_time')
                         <div class="error-message">{{ $message }}</div>
                         @enderror
                     </td>
@@ -93,8 +94,8 @@
                 <tr>
                     <th>備考</th>
                     <td>
-                        <textarea name="remarks">{{ old('remarks', $attendance->remarks) }}</textarea>
-                        @error('remarks')
+                        <textarea name="reason">{{ old('reason') }}</textarea>
+                        @error('reason')
                         <div class="error-message">{{ $message }}</div>
                         @enderror
                     </td>

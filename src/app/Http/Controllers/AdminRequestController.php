@@ -34,11 +34,24 @@ class AdminRequestController extends Controller
 
     public function show($id)
     {
+
         $request = AttendanceCorrectionRequest::with(['user', 'attendance.user', 'attendance.breakTimes', 'approver'])->findOrFail($id);
+
+
+        // 明示的にCarbon変換（もし必要なら）
+        //if (!($request->requested_clock_in_time instanceof \Carbon\Carbon)) {
+        //$request->requested_clock_in_time = \Carbon\Carbon::parse($request->requested_clock_in_time);
+        //}
+        //if (!($request->requested_clock_out_time instanceof \Carbon\Carbon)) {
+        //$request->requested_clock_out_time = \Carbon\Carbon::parse($request->requested_clock_out_time);
+        //}
+
+
         $attendance = $request->attendance;
 
         return view('admin.admin-request-show', compact('request', 'attendance'));
     }
+
 
     public function approve($id)
     {
@@ -46,6 +59,9 @@ class AdminRequestController extends Controller
         $request->status = 'approved';
         $request->approved_by = auth()->id();
         $request->save();
+
+        // 勤怠情報の更新は現在他の処理にて対応済み（ここでは未実装）
+        // 今後必要に応じて attendance の clock_in_time / clock_out_time を更新することも検討
 
         return back()->with('status', '承認しました');
     }

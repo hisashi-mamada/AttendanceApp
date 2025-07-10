@@ -12,11 +12,22 @@ class AttendanceCorrectionRequest extends Model
     protected $fillable = [
         'user_id',
         'attendance_id',
-        'requested_clock_in_time',
-        'requested_clock_out_time',
         'reason',
         'status',
         'approved_by',
+        'corrected_clock_in_time',
+        'corrected_clock_out_time',
+        'corrected_breaks',
+        'requested_clock_in_time',
+        'requested_clock_out_time',
+    ];
+
+    protected $casts = [
+        'corrected_clock_in_time' => 'datetime',
+        'corrected_clock_out_time' => 'datetime',
+        'corrected_breaks' => 'array',
+        'requested_clock_in_time' => 'datetime',
+        'requested_clock_out_time' => 'datetime',
     ];
 
     /**

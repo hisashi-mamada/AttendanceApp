@@ -531,6 +531,15 @@ body {
     border: none;
 }
 
+.approval-error-message {
+    text-align: right;
+    color: rgba(255, 0, 0, 0.5);
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+}
+
 ----------------------------/*request-list*/----------------------
 
 .request-list-wrapper {

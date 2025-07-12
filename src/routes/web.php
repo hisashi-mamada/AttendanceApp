@@ -64,8 +64,10 @@ Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->na
 
 Route::patch('/attendance/update/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
 
+Route::get('/stamp_correction_requests', [UserRequestController::class, 'index'])->name('request.list');
 
-Route::get('/stamp_correction_request/list', [UserRequestController::class, 'index'])->name('request.list');
+Route::get('/stamp_correction_requests/detail/{id}', [UserRequestController::class, 'show'])->name('request.detail');
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/attendances/{id}', [AdminAttendanceController::class, 'show'])->name('attendances.show');

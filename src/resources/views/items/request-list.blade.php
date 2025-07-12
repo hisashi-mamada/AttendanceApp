@@ -35,7 +35,8 @@
                     <td>{{ optional($request->attendance)->date ?? '---' }}</td>
                     <td>{{ $request->reason }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
-                    <td><a href="#" class="detail-link">詳細</a></td>
+                    <td><a href="{{ route('request.detail', ['id' => $request->id]) }}" class="detail-link">詳細</a>
+                    </td>
                 </tr>
                 @empty
                 <tr>

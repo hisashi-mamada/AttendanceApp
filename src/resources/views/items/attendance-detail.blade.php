@@ -103,9 +103,15 @@
             </table>
         </div>
 
+        @if (optional($attendance->correctionRequest)->status === 'pending')
+        <div class="approval-error-message">
+            ※承認待ちのため修正はできません。
+        </div>
+        @else
         <div class="button-area">
             <button type="submit" class="edit-button">修正</button>
         </div>
+        @endif
     </form>
 </div>
 @endsection

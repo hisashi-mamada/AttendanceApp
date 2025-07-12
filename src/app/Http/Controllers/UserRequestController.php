@@ -36,4 +36,23 @@ class UserRequestController extends Controller
             'requests' => $requests,
         ]);
     }
+
+    public function show($id)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->withErrors(['login' => 'ログインしてください']);
+        }
+
+        $request = AttendanceCorrectionRequest::with(['attendance.breakTimes'])
+            ->where('user_id', $user->id)
+            ->findOrFail($id);
+
+        $attendance = $request->attendance;
+
+        return view('items.attendance-detail', [
+            'attendance' => $attendance,
+            'request' => $request,
+        ]);
+    }
 }

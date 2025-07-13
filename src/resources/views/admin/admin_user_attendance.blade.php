@@ -71,7 +71,12 @@
     </table>
 
     <div class="button-area">
-        <button type="button" class="csv-button">CSV出力</button>
+        <form method="POST" action="{{ route('admin.attendances.export_csv', ['user' => $user->id]) }}">
+            @csrf
+            <input type="hidden" name="month" value="{{ \Carbon\Carbon::parse($month ?? now())->format('Y-m') }}">
+            <button type="submit" class="csv-button">CSV出力</button>
+        </form>
     </div>
+
 </div>
 @endsection

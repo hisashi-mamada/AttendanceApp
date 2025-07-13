@@ -91,3 +91,6 @@ Route::patch('/admin/attendances/{id}', [AdminAttendanceController::class, 'upda
     ->name('admin.attendances.update');
 
 Route::get('/admin/attendances/user/{user}', [AdminAttendanceController::class, 'userIndex'])->name('admin.attendances.user_index');
+
+Route::post('/admin/attendances/{user}/export-csv', [AdminAttendanceController::class, 'exportCsv'])
+    ->name('admin.attendances.export_csv');

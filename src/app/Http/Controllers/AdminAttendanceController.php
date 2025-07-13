@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use App\Http\Requests\AttendanceRequest;
 use App\Models\BreakTime;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+
+
 
 class AdminAttendanceController extends Controller
 {
@@ -79,5 +82,62 @@ class AdminAttendanceController extends Controller
 
         return redirect()->route('admin.attendances.show', ['id' => $attendance->id])
             ->with('message', '勤怠情報を更新しました。');
+    }
+
+    public function exportCsv(Request $request, $userId)
+    {
+        $month = $request->input('month');
+        $startDate = \Carbon\Carbon::parse($month)->startOfMonth();
+        $endDate = \Carbon\Carbon::parse($month)->endOfMonth();
+
+        $attendances = Attendance::with('breakTimes')
+            ->where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
+
+        $csvData = [];
+        $csvData[] = ['日付', '出勤', '退勤', '休憩時間', '合計'];
+
+        foreach ($attendances as $attendance) {
+            $breakMinutes = $attendance->breakTimes->reduce(function ($carry, $break) {
+                if ($break->break_start_time && $break->break_end_time) {
+                    return $carry + \Carbon\Carbon::parse($break->break_end_time)->diffInMinutes($break->break_start_time);
+                }
+                return $carry;
+            }, 0);
+
+            $workMinutes = null;
+            if ($attendance->clock_in_time && $attendance->clock_out_time) {
+                $workMinutes = \Carbon\Carbon::parse($attendance->clock_out_time)->diffInMinutes($attendance->clock_in_time) - $breakMinutes;
+            }
+
+            $csvData[] = [
+                $attendance->date,
+                $attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '-',
+                $attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '-',
+                $breakMinutes ? floor($breakMinutes / 60) . ':' . str_pad($breakMinutes % 60, 2, '0', STR_PAD_LEFT) : '-',
+                $workMinutes ? floor($workMinutes / 60) . ':' . str_pad($workMinutes % 60, 2, '0', STR_PAD_LEFT) : '-',
+            ];
+        }
+
+        $filename = 'attendance_' . $userId . '_' . $month . '.csv';
+
+        // 出力用のバッファを開く
+        $handle = fopen('php://temp', 'r+');
+
+        foreach ($csvData as $row) {
+            // SJIS-winに変換して出力
+            $convertedRow = array_map(fn($value) => mb_convert_encoding($value, 'SJIS-win', 'UTF-8'), $row);
+            fputcsv($handle, $convertedRow);
+        }
+
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv; charset=Shift_JIS',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
     }
 }

@@ -688,4 +688,6 @@ body {
     font-size: 22px ;
     border: none ;
     letter-spacing: 0.15em ;
+    cursor: pointer;
 }
+

@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRequestController;
 use App\Models\Attendance;
+use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware(['web'])
     ->name('login.store');
+
 
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -55,7 +57,9 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware(['auth'])
     ->name('logout');
 
-Route::get('/attendance', [AttendanceController::class, 'create'])->name('attendances.index');
+Route::get('/attendance', [AttendanceController::class, 'create'])
+    ->middleware(['auth', 'verified'])   // ← verified を追加
+    ->name('attendances.index');
 Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendances.store');
 
 Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendances.list');

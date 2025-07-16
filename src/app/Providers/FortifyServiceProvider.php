@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Contracts\LoginResponse;
 use App\Http\Responses\FortifyLoginResponse;
@@ -74,6 +77,10 @@ class FortifyServiceProvider extends ServiceProvider
             return view('items.register');
         });
 
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify');
+        });
+
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password');
         });
@@ -81,5 +88,20 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetPasswordView(function ($request) {
             return view('auth.reset-password', ['request' => $request]);
         });
+
+        Route::middleware(['web', 'auth'])
+            ->prefix('email')
+            ->group(function () {
+                Route::get('/verify', [EmailVerificationPromptController::class, '__invoke'])
+                    ->name('verification.notice');
+
+                Route::get('/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+                    ->middleware(['signed'])
+                    ->name('verification.verify');
+
+                Route::post('/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+                    ->middleware(['throttle:6,1'])
+                    ->name('verification.send');
+            });
     }
 }

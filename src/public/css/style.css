@@ -89,7 +89,7 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 
@@ -394,9 +394,6 @@ body {
 
 .th-date{
     text-align: center;
-    padding-left: 20px;
-    position: relative;
-    right: 20px;
 }
 
 .attendance-table td {
@@ -433,7 +430,7 @@ body {
     border-radius: 12px;
     border-bottom: 2px solid #E1E1E1;
     width: 800px;
-    height: 560px;
+    height: 100%;
     margin: 0 auto;
 }
 
@@ -514,9 +511,9 @@ body {
     clear: both;
 }
 
-.button-area {
+.csv-button-area {
     text-align: right;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .edit-button {
@@ -690,4 +687,118 @@ body {
     letter-spacing: 0.15em ;
     cursor: pointer;
 }
+
+/* タブレット（768px〜850px）対応 */
+
+@media screen and (max-width: 850px) and (min-width: 768px)
+{
+.top-heading{
+    font-size: 40px;
+    margin-top: 60px;
+}
+
+
+
+.auth-content input[type="text"],
+.auth-content input[type="email"],
+.auth-content input[type="password"] {
+    width: 680px;
+    height: 59px;
+    border-radius: 4px;
+    border: 1px solid #5F5F5F;
+    font-size: 20px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.toppage-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background-color: #000;
+    height: 130px;
+}
+
+.toppage-header-nav {
+    display: flex;
+    align-items: center;
+}
+.toppage-nav-link{
+    font-size: 16px;
+    width: 80px;
+}
+.attendance-list-wrapper {
+    padding: 20px;
+    width: 700px;
+}
+
+.attendance-month-navigation,
+.attendance-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.attendance-month-navigation {
+    height: auto;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.month-nav {
+    margin: 0 25px;
+}
+
+.attendance-table th,
+.attendance-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+.month-current {
+    font-size: 18px;
+}
+
+.attendance-detail-wrapper{
+    width: 100%;
+}
+
+.attendance-detail-title{
+margin-left: 40px;
+}
+
+.attendance-detail-box{
+    width: 90%;
+}
+.custom-border-line{
+    width: 100%;
+}
+.button-area{
+    margin-right: 37px;
+}
+
+.request-list-wrapper{
+    width: 100%;
+}
+
+.request-table-container{
+    width: 95%;
+    margin-left: 20px;
+}
+
+.staff-list-wrapper{
+    width: 100%;
+}
+
+.user-list-table{
+    width: 95%;
+    margin-left: 20px;
+}
+}
+
+
 

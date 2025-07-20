@@ -61,4 +61,9 @@ class AttendanceCorrectionRequest extends Model
     {
         return $this->hasMany(AdminMemo::class, 'correction_request_id');
     }
+
+    public function approvalStatus()
+    {
+        return $this->belongsTo(ApprovalStatus::class, 'status', 'name');
+    }
 }

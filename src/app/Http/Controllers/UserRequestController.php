@@ -12,6 +12,11 @@ class UserRequestController extends Controller
     {
         $tab = $request->query('tab', 'pending');
         $user = Auth::user();
+        $requests = AttendanceCorrectionRequest::with(['attendance', 'approvalStatus'])
+            ->where('user_id', $user->id)
+            ->where('status', $tab)
+            ->orderByDesc('created_at')
+            ->get();
 
         if (!$user) {
             return redirect()->route('login')->withErrors(['login' => 'ログインしてください']);

@@ -52,6 +52,6 @@
 ## ユーザーについて
 
 - 管理者:
-        -'email' => ['admin@example.com',]
-        -'password' =>['password123']
+    -'email' => ['admin@example.com',]
+    -'password' =>['password123']
 

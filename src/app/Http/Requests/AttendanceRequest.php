@@ -42,11 +42,11 @@ class AttendanceRequest extends FormRequest
                     $end   = $endStr   ? Carbon::createFromFormat('Y-m-d H:i', $date . ' ' . $endStr)   : null;
 
                     if ($start && ($start->lt($clockIn) || $start->gt($clockOut))) {
-                        $validator->errors()->add("breaks.$index.start", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("breaks.$index.start", '休憩時間が不適切な値です');
                     }
 
                     if ($end && ($end->lt($clockIn) || $end->gt($clockOut))) {
-                        $validator->errors()->add("breaks.$index.end", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("breaks.$index.end", '休憩時間が不適切な値です');
                     }
                 }
             } catch (\Exception $e) {

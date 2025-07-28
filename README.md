@@ -51,7 +51,7 @@
 
 ## ユーザーについて
 
-- 管理者:
-    -'email' => ['admin@example.com',]
-    -'password' =>['password123']
+- 管理者ユーザー
+-'email' => ['admin@example.com',]
+-'password' =>['password123']
 

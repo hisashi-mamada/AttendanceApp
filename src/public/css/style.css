@@ -415,7 +415,10 @@ body {
     color: #0056b3;
 }
 
-
+.button-area {
+    text-align: right;
+    margin-top: 10px;
+}
 ----------------------------/*attendance-detail*/----------------------------
 
 .attendance-detail-wrapper {

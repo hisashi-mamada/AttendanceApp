@@ -47,3 +47,10 @@
 - 開発環境: [http://localhost](http://localhost)
 - phpMyAdmin: [http://localhost:8080](http://localhost:8080)
 - Mailhog: <http://localhost:8025>
+
+## ユーザーについて
+
+- 管理者:
+        'email' => ['admin@example.com',]
+        'password' =>['password123']
+

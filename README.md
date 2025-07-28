@@ -22,6 +22,7 @@
 1. `.env`  をコピーして  `.env.testing`  を作成（phpunit 用テスト環境の設定）
 2. `php artisan migrate --env=testing` でテスト用DBにマイグレーション
 3. `php artisan db:seed --env=testing` でテスト用DBにデータ投入
+4. `php artisan test`でテスト実行
 
 ### 開発補助コマンド
 
@@ -51,6 +52,6 @@
 ## ユーザーについて
 
 - 管理者:
-        'email' => ['admin@example.com',]
-        'password' =>['password123']
+        -'email' => ['admin@example.com',]
+        -'password' =>['password123']
 

@@ -9,7 +9,7 @@
         メール認証を完了してください。
     </h1>
 
-    <a href="#" class="verify-button" style="
+    <a href="http://localhost:8025" target="_blank" class="verify-button" style="
         display: inline-block;
         background-color: #f3f3f3;
         border: 1px solid #999;

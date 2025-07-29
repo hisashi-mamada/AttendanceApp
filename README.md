@@ -55,3 +55,7 @@
 -'email' => ['admin@example.com',]
 -'password' =>['password123']
 
+- 一般ユーザー
+-'name' => '山田 花子',
+-'email' => ['user4@example.com',]
+-'password' =>['password01']

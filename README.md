@@ -30,6 +30,13 @@
 2. `php artisan route:list` ルーティング一覧を表示
 3. `php artisan serve`     アプリ起動
 
+### 権限エラーが出た場合
+
+ログやキャッシュ関連でエラーが出た場合は、以下を実行してください
+
+chmod -R 777 storage
+chmod -R 777 bootstrap/cache
+
 ## 使用技術（実行環境）
 
 - PHP 8.1

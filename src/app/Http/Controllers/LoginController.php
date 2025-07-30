@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('items.login'); // Bladeファイルの場所に合わせて
+        return view('items.login');
     }
 
     public function login(Request $request)
@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // 遷移先は必要に応じて変更
+            return redirect()->intended('/dashboard'); 
         }
 
         return back()->withErrors([

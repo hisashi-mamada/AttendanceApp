@@ -38,11 +38,10 @@
                     <th>出勤・退勤</th>
                     <td class="time-cell">
                         <input type="text" name="requested_clock_in_time"
-                            value="{{ old('requested_clock_in_time', $attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '') }}">
+                            value="{{ old('requested_clock_in_time', isset($request->requested_clock_in_time) ? \Carbon\Carbon::parse($request->requested_clock_in_time)->format('H:i') : ($attendance->clock_in_time ? \Carbon\Carbon::parse($attendance->clock_in_time)->format('H:i') : '')) }}">
                         〜
                         <input type="text" name="requested_clock_out_time"
-                            value="{{ old('requested_clock_out_time', $attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '') }}">
-
+                            value="{{ old('requested_clock_out_time', isset($request->requested_clock_out_time) ? \Carbon\Carbon::parse($request->requested_clock_out_time)->format('H:i') : ($attendance->clock_out_time ? \Carbon\Carbon::parse($attendance->clock_out_time)->format('H:i') : '')) }}">
                         @error('requested_clock_in_time')
                         <div class="error-message">{{ $message }}</div>
                         @enderror
@@ -112,6 +111,7 @@
             <button type="submit" class="edit-button">修正</button>
         </div>
         @endif
+
     </form>
 </div>
 @endsection

@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use App\Http\Requests\AttendanceRequest;
-use App\Models\BreakTime;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 
 
 

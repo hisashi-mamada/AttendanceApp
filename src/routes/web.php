@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -10,11 +9,8 @@ use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRequestController;
-use App\Models\Attendance;
-use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
-use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('top.index');

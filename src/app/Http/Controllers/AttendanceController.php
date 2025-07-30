@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakTime;
@@ -65,7 +63,7 @@ class AttendanceController extends Controller
             [
                 'clock_in_time' => null,
                 'clock_out_time' => null,
-                'status' => '未設定' // もしくは '出勤前' など任意
+                'status' => '未設定' //
             ]
         );
 
@@ -144,8 +142,9 @@ class AttendanceController extends Controller
         $attendance = Attendance::with('breakTimes')->findOrFail($id);
 
         $date = $attendance->date; // 勤務日
-        $clockInDateTime = \Carbon\Carbon::parse($date . ' ' . $request->input('clock_in_time'));
-        $clockOutDateTime = \Carbon\Carbon::parse($date . ' ' . $request->input('clock_out_time'));
+        $clockInDateTime = Carbon::parse($date . ' ' . $request->input('requested_clock_in_time'));
+        $clockOutDateTime = Carbon::parse($date . ' ' . $request->input('requested_clock_out_time'));
+
 
 
         AttendanceCorrectionRequest::create([
